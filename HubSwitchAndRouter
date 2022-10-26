@@ -1,0 +1,4 @@
+Switches and hubs work only with the local area network (LAN), while routers can be based on LAN or wide area network (WAN).
+Network switches, routers, and hubs work at different OSI model layers; switches operate at the data link layer, routers at the network layer, whereas hubs operate at the physical layer.
+Network switches, routers, and hubs work at different OSI model layers; switches operate at the data link layer, routers at the network layer, whereas hubs operate at the physical layer.
+Switches save the MAC address in their database, also known as a lookup table. On the other hand, the router saves the IP address in its database, known as the routing table. Whereas hub doesn’t use any table, it broadcasts the data to all the ports.
