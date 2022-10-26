@@ -1,0 +1,61 @@
+0. A deadlock occurs when execution of two or more processes is blocked because each process holds some resource and waits for another resource held by some other process.
+1. 4 conditions of deadlock (Coffman condition):
+  a. mutually exclusive: at least one of the system resources requested can be used by at most one process.
+  b. hold and wait: at least one process holds some resources and waits for at least one another process to release resources for it to use
+  c. no preemption: the resources held by one process cannot be released by external forces; it can only be released by itself.
+  d. all the processes must wait for the resource in a cyclic manner where the last process waits for the resource held by the first process.
+2. deadlock handling:
+  a. deadlock prevention:
+    (0). no mutual exclusion: same as deadlock ignorance
+    (1). do not hold and wait:
+      request all resources beforhand.
+        drawback: 
+         （a). processes may not know what they need beforehand
+          (b). starvation
+          (c). low utility of system (only request resources for short periods of times)
+          optimization:
+            releases all resources before requesting anything new (helps with a)
+     (2). preempts:
+        two approaches:
+        (0). Preempt requesting processes’ resources if all not available
+        (1). Preempt resources of waiting processes to satisfy request
+        Good when easy to save and restore state of resource
+          CPU registers, memory virtualization
+     (3). breaks circular wait
+        (0). single lock of system
+        (1). disabling interrupts during critical sections and builds a hierarchy and then uses partial ordering for other processes
+  b. deadlock avoidance:
+      check for all the resources a process will need and calculate to ensure no deadlocks (safe state) before starting the process
+      banker's algorithm:
+        Let process i be the next process that is scheduled to run
+        Let request[i] be vector of # of resource Rj Process Pi wants in addition to 
+        the resources it already has
+        1. If request[i] > need[i] then error (asked for too much)
+        2. If request[i] > available then wait (can’t supply it now)
+        3. Resources are currently available to satisfy the request
+        Let’s tentatively assume that we satisfy the request. Then we would 
+        have:
+        available = available - request[i]
+        allocation[i] = allocation[i] + request[i]
+        need[i] = need[i] - request[i]
+        Now, check if this would leave us in a safe state:
+        if yes, grant the request, 
+        if no, then leave the state as is and cause process to wait. 4
+  c. deadlock detection and recovery: 
+    when a deadlock occurs, the system examines system state (expensive, require comprehensive algorithm and determine the frequency of the algorithm)
+    the system buulds a resource allocation graph and trying to reduce the graph to nothing left or deadlock
+    and either we can
+      (0). process termination: 
+        (a). abort all processes. ensures speedy and certain deadlock resolution, yet may be expensive due to loss of intermediate results.
+        (b). abort one process at a time. Loss less data, yet large overhead due to repeated examination of system state after abortions, also requires a good algorithm
+      (1). process preemption: 
+        releases some resources to give the resource to another process, see whether it resolves the deadlock, 
+        things to consider:
+          how to pick a process
+          roll back to safe state or abort and restart
+          may be expensive
+          starvation: if a process is always preempted, then it starves. we need to consider that.
+        require partial or total rollback. save results? need to make sure that 
+  d. deadlock ignorance: 
+    assuming no deadlock. Used when deadlocks happen with large time difference and data loss is tolerable.
+  
