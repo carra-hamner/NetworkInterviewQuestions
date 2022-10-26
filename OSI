@@ -1,0 +1,80 @@
+0. physical layer
+  
+1. data link layer
+  establishes and terminates a connection between two phycially connected nodes on a network.
+  breaks up packets into frames and sends them from source todestination
+  Logical Link Control and Media Access Control
+2. network layer
+  a. divide the huge packets into little chunks, if the packet is higher than the most extensive data link layer
+  b. reassemble the packets on the receiving end
+  c. routing and switching
+    rounter: contains two or more links and is responsible for finding the way to transmit data. 
+             It contains multiple interfaces, one for each link, to provide routing services.
+             IP requires each interface to have an IP addres because each interface is capable of sending and receiving IP packets
+              IP address: 
+                version is not important as it is determined in datalink layer
+                i. IP4: 32 bits address space
+                  (i). header: 14 fields, 1 optional
+                    version: 4
+                    IHL(internet header length): 5 to 15 - indicating 5 * 32 bits = 160 bits = 20 bytes to 15 * 32 bits = 60 bytes
+                    Differentiated Services Code Point (DSCP): Originally defined as the type of service (ToS), this field specifies differentiated services (DiffServ) per RFC 2474.[a] Real-time data streaming makes use of the DSCP field. An example is Voice over IP (VoIP), which is used for interactive voice services.
+                    Explicit Congestion Notification (ECN): This field is defined in RFC 3168 and allows end-to-end notification of network congestion without dropping packets. ECN is an optional feature available when both endpoints support it and effective when also supported by the underlying network.
+                    Identification: an identification field and is primarily used for uniquely identifying the group of fragments of a single IP datagram.
+                    Total Length: 16 bits, defines header + body length. min: 20 bytes (header without data); max: 65,535 bytes
+                    Flags: A three-bit field follows and is used to control or identify fragments. They are (in order, from most significant to least significant):
+                      bit 0: Reserved; must be zero.[b]
+                      bit 1: Don't Fragment (DF): if the DF flag is set, and fragmentation is required to route the packet, then the packet is dropped.
+                      bit 2: More Fragments (MF): For unfragmented packets, the MF flag is cleared. For fragmented packets, all fragments except the last have the MF flag set. 
+                                                  The last fragment has a non-zero Fragment Offset field, differentiating it from an unfragmented packet.
+                      Fragment offset: specifies the offset of a particular fragment relative to the beginning of the original unfragmented IP datagram in units of eight-byte blocks. The first fragment has an offset of zero. The 13 bit field allows a maximum offset of (213 – 1) × 8 = 65,528 bytes, which, with the header length included (65,528 + 20 = 65,548 bytes), supports fragmentation of packets exceeding the maximum IP length of 65,535 bytes.                            
+                      Time to live: 8 bit. specifies how long the packet live in seconds to prevent network failure in the event of a routing loop. 
+                                    uses as a hop count (how many times the packet traverses from source to destination) so when it reaches a rounter, ttl - 1.
+                      Protocol: defines the protocol used in the data portion of the IP datagram.
+                      Header checksum: The 16-bit IPv4 header checksum field is used for error-checking of the header. 
+                      Source address: the IPv4 address of the sender of the packet. Note that this address may be changed in transit by a network address translation device.
+                      Destination address: the IPv4 address of the receiver of the packet. As with the source address, this may be changed in transit by a network address translation device.
+                  (ii). data
+                    The packet payload is not included in the checksum. Its contents are interpreted based on the value of the Protocol header field.
+                ii. IP6: 128-bit
+                  (i). header: 40 bytes in length.
+                  Version: 4 bits
+                  Traffic Class: 8 bits. similar to the Service Field of the IPv4 packet. It signifies the priority of the IPv6 packet. can change during transportation
+                  Flow Label: 20 bits. ordering. 0 for routers and hosts do not support this.
+                  Payload length: 16 bits. total length including upper layer packet and extension header (if any). if the length become greater than 65,535 bytes, then the field becomes 0.
+                  next header: 8 bits. similar to IPv4 protocol field. signifies the Extension Header type or if not present, signifies the protocols present inside the upper layer packet 
+                               like UDP, TCP, etc. UDP (17) and TCP (6) are the most common Next Headers. 
+                  HOP limit: 8 bits. similiar to IPv4 TTL. It allows a maximum of 255 hops between the nodes
+                  Source address: 128 bits.
+                  destination address: 128 bits.
+                  (Optional) Extension Headers: present in between the Upper-Layer Header and the Fixed Header. 
+                  In case extension headers are being used, then Fixed Header’s Next Header’s field will point to the first Extension Header.
+                  During the transition of the Internet from IPv4 to IPv6, it is typical to operate in a mixed addressing environment. 
+                  For such use cases, a special notation has been introduced, 
+                  which expresses IPv4-mapped and IPv4-compatible IPv6 addresses by writing the least-significant 32 bits of an address in the familiar IPv4 dot-decimal notation, 
+                  whereas the 96 most-significant bits are written in IPv6 format.
+               routing:
+                (i). static: manual routing
+                (ii). dynamic: use various routing protocols to determine the shortest and fastest paths.
+                (iii). default: the router is configured to send all packets towards a single router (next hop).
+  d. creates logical association between senders and users.
+  e. internetworking: main responsibility. provides logical connections among multiple types of networks
+  f. addressing: logical, software-based
+    ip: internet protocol address. 
+  g. packetizing
+  h. data switching: the procedure of changing packet (data blocks) from source to the destination hub
+  i. congestion Control
+3. transport layer
+  takes data from session layer, break them into packets with length obtained from the session layer, reassemble and check for lost packages, and send them to the network layer
+  functions:
+  a. service point addressing: locate correct program on a computer
+    service point address / port: a type of address in header to find correct process in a computer
+  b. flow control
+  c. error control
+4. session layer
+  creates sessions (communication channels) between layers
+5. presentation layer
+  defines how two devices need to encrypts, encodes, and compresses data to communicate
+6. application layer: 
+  used by end-user software
+  protocols: HTTP, FTP, POP, SMTP, DNS ...
+  
