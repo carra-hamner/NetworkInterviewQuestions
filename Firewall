@@ -1,0 +1,7 @@
+Firewall monitors and filters incoming network traffic.
+0. packet filtering firewall
+  the traditional one; block traffic using IP details; does not check payload
+1. circuit-level gateway: monitors tcp handshakes (transport 
+2. application-level gateway (aka proxy firewall)
+3. stateful inspection firewall
+4. next-generation firewall (NGFW)
